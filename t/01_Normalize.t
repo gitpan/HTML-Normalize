@@ -56,7 +56,7 @@ my @failFiles;
 my $extMatch = qr/\.Nor([FT])R?$/;
 
 # Build list of test data files
-opendir SCAN, "./t";
+opendir SCAN, "t";
 while (defined ($_ = readdir SCAN)) {
     next if $_ !~ $extMatch;
     my $arg = $1 eq 'T' ? \@okFiles : \@failFiles;
@@ -65,11 +65,11 @@ while (defined ($_ = readdir SCAN)) {
 closedir SCAN;
 
 if (!$debug) {
-    opendir SCAN, "./t/OkTests";
+    opendir SCAN, "t/OkTests";
     while (defined ($_ = readdir SCAN)) {
         next if $_ !~ $extMatch;
         my $arg = $1 ne 'F' ? \@okFiles : \@failFiles;
-        push @$arg, "./t/OkTests/$_";
+        push @$arg, "t/OkTests/$_";
     }
     closedir SCAN;
 }

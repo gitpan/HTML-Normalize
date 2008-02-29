@@ -2,7 +2,7 @@ NAME
     HTML::Normalize - HTML light weight cleanup
 
 VERSION
-    Version 1.0000
+    Version 1.0001
 
 SYNOPSIS
         my $norm = HTML::Normalize->new ();
