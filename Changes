@@ -5,3 +5,6 @@ Revision history for Perl module HTML::Normalize
 
 1.0001 Fri Feb 29 20:32:15 2008
     - fix path in tests to test data files
+
+1.0002 Sat Mar 01 08:48:22 2008
+    - change dos line ends to *nix line ends in test files

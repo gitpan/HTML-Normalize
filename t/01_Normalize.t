@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More qw(no_plan);
+use Test::More;
 use HTML::TreeBuilder;
 
 =head1 NAME
@@ -46,6 +46,7 @@ rendering the parsed HTML with any options given applied.
 
 BEGIN {
     use lib 'lib'; # For develpment testing
+    plan (tests => 39);
     use_ok ("HTML::Normalize");
 }
 

@@ -10,7 +10,7 @@ use Carp;
 BEGIN {
     use Exporter ();
     use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    $VERSION     = '1.0001';
+    $VERSION     = '1.0002';
     @ISA         = qw(Exporter);
     @EXPORT      = qw();
     @EXPORT_OK   = qw();
@@ -23,7 +23,7 @@ HTML::Normalize - HTML light weight cleanup
 
 =head1 VERSION
 
-Version 1.0001
+Version 1.0002
 
 =head1 SYNOPSIS
 
