@@ -10,7 +10,7 @@ use Carp;
 BEGIN {
     use Exporter ();
     use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    $VERSION     = '1.0002';
+    $VERSION     = '1.0003';
     @ISA         = qw(Exporter);
     @EXPORT      = qw();
     @EXPORT_OK   = qw();
@@ -23,12 +23,12 @@ HTML::Normalize - HTML light weight cleanup
 
 =head1 VERSION
 
-Version 1.0002
+Version 1.0003
 
 =head1 SYNOPSIS
 
-    my $norm = HTML::Normalize->new (-html => $dirtyHtml);
-    my $cleanHtml = $norm->cleanup ();
+    my $norm = HTML::Normalize->new ();
+    my $cleanHtml = $norm->cleanup (-html => $dirtyHtml);
 
 =head1 DESCRIPTION
 
@@ -36,11 +36,15 @@ HTML::Normalize uses HTML::TreeBuilder to parse an HTML string then processes
 the resultant tree to clean up various structural issues in the original HTML.
 The result is then rendered using HTML::Element's as_HTML member.
 
-Key structural clean ups fix tag soup (C<< <b><i>foo</b></i> >> becomes
-C<< <b><i>foo</i></b> >>)
-and inline/block element nesting (C<< <span><p>foo</p></span> >> becomes
-C<< <p><span>foo</span></p> >>). C<< <br> >> tags at the start or end of a link
-element are migrated out of the element.
+Key structural clean ups fix tag soup (C<< <b><i>foo</b></i> >> becomes C<<
+<b><i>foo</i></b> >>) and inline/block element nesting (C<<
+<span><p>foo</p></span> >> becomes C<< <p><span>foo</span></p> >>). C<< <br> >>
+tags at the start or end of a link element are migrated out of the element.
+
+Note that HTML::Normalize's approach to cleaning up tag soup is different than
+that used by HTML::Tidy. HTML::Tidy tends to enforce nested and swaps end tags
+to achieve that. HTML::Normalize inserts extra tags to allow correctly taged
+overlapped markup.
 
 HTML::Normalize can also remove attributes set to default values and empty
 elements. For example a C<< <font face="Verdana" size="1" color="#FF0000"> >>
@@ -50,13 +54,17 @@ default font.
 
 =head1 Methods
 
-C<new> performs parameter validation and parses the HTML to generate the
-internal representation.
+C<new> creates an HTML::Normalize instance and performs parameter validation.
 
-C<cleanup> parses and edits the internal representation then renders the result
-back into HTML.
+C<cleanup> Validates any further parameters and check parameter consistency then
+parses the HTML to generate the internal representation. It then edits the
+internal representation and renders the result back into HTML.
 
-Generally errors are handled by carping.
+Note that I<cleanup> may be called multiple times with different HTML strings to
+process.
+
+Generally errors are handled by carping and may be detected in both I<new> and
+I<cleanup>.
 
 =cut
 
@@ -64,7 +72,7 @@ Generally errors are handled by carping.
 
 Create a new C<HTML::Normalize> instance.
 
-    my $norm = HTML::Normalize->new (-html => $dirtyHtml);
+    my $norm = HTML::Normalize->new ();
 
 =over 4
 
